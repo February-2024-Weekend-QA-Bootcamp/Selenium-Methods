@@ -31,9 +31,41 @@ public class HomePageTest extends BaseClass {
 		homePage.clickNewUserRegistration();
 	}
 	
-	@Test (enabled = true)
+	@Test (enabled = false)
 	public void clickLogoTest() {
 		homePage.clickLogo();
 	}
+	
+	// Test for implicitly wait and it shows No such element exception
+	// org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element
+	@Test(enabled = false)
+	public void clickWrongNewUserIdTest() {
+		homePage.clickWrongNewUserRegistration();
+	}
+	
+	// This test case will fail, when you remove Pagefactory class from code form HomePage to test this
+	// When PageFactory class is absent, you will find NullPointerException
+	// Exception is: java.lang.NullPointerException: Cannot invoke "org.openqa.selenium.WebElement.click()" 
+	// because "element" is null	
+	@Test (enabled = true)
+	public void nullPointerExceptionTest() throws InterruptedException {
+		homePage.clickNewUserRegistration();
+	}
+		
+	@Test(enabled = false)
+	public void clickUnlockTest() throws InterruptedException {
+		homePage.clickUnlock();
+	}
+	
+	@Test(enabled = false)
+	public void inputTextInUserIdFieldTest() {
+		homePage.inputTextInUserIdField();
+	}
+	
+	@Test(enabled = false)
+	public void inputTextInUserIdAndPasswordFieldThenIAgreeThenClickLoginButtonTest() throws InterruptedException {
+		homePage.inputTextInUserIdAndPasswordFieldThenIAgreeThenClickLoginButton();
+	}
+	
 
 }
