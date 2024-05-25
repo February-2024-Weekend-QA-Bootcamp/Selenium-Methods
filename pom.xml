@@ -21,6 +21,14 @@
 			<version>7.7.1</version>
 		</dependency>
 
+		<!-- Webdriver manager is used as an alternative for physical driver as chromedriver, geckodriver etc -->
+		<dependency>
+			<groupId>io.github.bonigarcia</groupId>
+			<artifactId>webdrivermanager</artifactId>
+			<version>5.8.0</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
