@@ -47,7 +47,7 @@ public class HomePageTest extends BaseClass {
 	// When PageFactory class is absent, you will find NullPointerException
 	// Exception is: java.lang.NullPointerException: Cannot invoke "org.openqa.selenium.WebElement.click()" 
 	// because "element" is null	
-	@Test (enabled = true)
+	@Test (enabled = false)
 	public void nullPointerExceptionTest() throws InterruptedException {
 		homePage.clickNewUserRegistration();
 	}
@@ -66,6 +66,85 @@ public class HomePageTest extends BaseClass {
 	public void inputTextInUserIdAndPasswordFieldThenIAgreeThenClickLoginButtonTest() throws InterruptedException {
 		homePage.inputTextInUserIdAndPasswordFieldThenIAgreeThenClickLoginButton();
 	}
+	
+	@Test(enabled = false)
+	public void useOfByClassInLoginTest() {
+		homePage.useOfByClassInLogin();
+	}
+	
+	@Test(enabled = false)
+	public void use_of_linkText_as_locator_in_forgot_userId_hyperlink_test() {
+		homePage.use_of_linkText_as_locator_in_forgot_userId_hyperlink();
+	}
+	
+	@Test(enabled = false)
+	public void use_of_partialLinkText_as_locator_in_forgot_passowrd_hyperlink_test() {
+		homePage.use_of_partialLinkText_as_locator_in_forgot_passowrd_hyperlink();
+	}
+	
+	@Test(enabled = false)
+	public void why_we_use_cssSelector_as_locator_in_logo_test () {
+		homePage.why_we_use_cssSelector_as_locator_in_logo ();
+	}
+	
+	@Test(enabled = false)
+	public void role1_use_of_cssSelector_by_class_name_value_test() {
+		homePage.role1_use_of_cssSelector_by_class_name_value();
+	}
+	
+	@Test(enabled = false)
+	public void role2_use_of_cssSelector_by_id_value_test() {
+		homePage.role2_use_of_cssSelector_by_id_value();
+	}
+	
+	@Test(enabled = false)
+	public void role3_use_of_cssSelector_by_compund_class_name_value_test () {
+		homePage.role3_use_of_cssSelector_by_compund_class_name_value ();
+	}
+	
+	@Test(enabled = false)
+	public void role4_use_of_cssSelector_by_attribute_and_its_value_test () {
+		homePage.role4_use_of_cssSelector_by_attribute_and_its_value ();
+	}
+	
+	@Test(enabled = false)
+	public void role5_use_of_cssSelector_by_class_name_value_and_attribute_and_its_value_test() {
+		homePage.role5_use_of_cssSelector_by_class_name_value_and_attribute_and_its_value();
+	}
+	
+	@Test(enabled = false)
+	public void role6_use_of_cssSelector_by_id_value_and_attribute_and_its_value_test() {
+		homePage.role6_use_of_cssSelector_by_id_value_and_attribute_and_its_value();
+	}
+	
+	@Test(enabled = false)
+	public void use_of_tagName_as_locator_test() {
+		homePage.use_of_tagName_as_locator();
+	}
+	
+	@Test(enabled = false)
+	public void use_of_isDisplayed_test() {
+		homePage.use_of_isDisplayed();
+	}
+	
+	@Test(enabled = false)
+	public void use_of_isDisplayed_in_login_test() {
+		homePage.use_of_isDisplayed_in_login();
+	}
+	
+	@Test(enabled = false)
+	public void use_of_isEnabled_in_login_test() {
+		homePage.use_of_isEnabled_in_login();
+	}
+	
+	@Test(enabled = true)
+	public void use_of_isSelected_in_login() {
+		homePage.use_of_isSelected_in_login();
+	}
+	
+	
+	
+	
 	
 
 }
