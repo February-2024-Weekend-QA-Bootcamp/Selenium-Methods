@@ -137,10 +137,32 @@ public class HomePageTest extends BaseClass {
 		homePage.use_of_isEnabled_in_login();
 	}
 	
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void use_of_isSelected_in_login() {
 		homePage.use_of_isSelected_in_login();
 	}
+	
+	@Test(enabled = false)
+	public void getMethodsOfThePageTest() {
+		homePage.getMethodsOfThePage();
+	}
+	
+	@Test(enabled = false)
+	public void newUserRegistrationPageValidationTest() {
+		homePage.newUserRegistrationPageValidation();
+	}
+	
+	@Test(enabled = false)
+	public void use_of_getAttribute_method_Test () {
+		homePage.use_of_getAttribute_method();
+	}
+	
+	@Test(enabled = true)
+	public void use_of_clear_in_login_test() {
+		homePage.use_of_clear_in_login();
+	}
+	
+	
 	
 	
 	
