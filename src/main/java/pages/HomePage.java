@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 // new, you have to manually write it to get access of common method
 // this is possible when they are static in nature, * means all
@@ -316,6 +317,82 @@ public class HomePage {
 		pause(3);
 	}
 	
+	// In real time scenario we do below test at the beginning of a page
+	public void getMethodsOfThePage() {
+		String actual = driver.getTitle();
+		System.out.println("Title name: "+ actual);
+		String expected = "CMS Enterprise Portal";
+		Assert.assertEquals(actual, expected, "Title doesn't match!");
+		
+		String currentURL = driver.getCurrentUrl(); 
+		System.out.println("Current URL: " + currentURL);
+		String expectedURL= "https://portal.cms.gov/portal/";
+		Assert.assertEquals(currentURL, expectedURL, "The driver failed to direct at right URL");
+		
+		// use of getText() in "login button"
+		String nameOfTheWebElement = driver.findElement(By.name("Submit Login")).getText();
+		System.out.println("Text Present: "+nameOfTheWebElement);
+		String expectedText = "Login";
+		Assert.assertEquals(nameOfTheWebElement, expectedText, "The text of the WebElement doesn't match");
+	}
+	
+	// This is the first method used in a class
+	// what is title?
+	// what is the url?
+	// is logo displayed?
+	// method coming from common action
+	public void newUserRegistrationPageValidation() {
+		pause(3);
+		elementDisplayed(logo);
+		verifyTitle(driver, "CMS Enterprise Portal");
+		verifyCurrentUrl(driver, "https://portal.cms.gov/portal/");
+		elementDisplayed(newUserRegistration);
+		verifyTextOfTheWebElement(newUserRegistration, "New User Registration");
+		clickElement(newUserRegistration);
+		pause(3);
+		verifyTitle(driver, "CMS Enterprise Portal - New User Registration");
+		verifyCurrentUrl(driver, "https://portal.cms.gov/portal/newuserregistration");
+	}
+
+	// Here We used User ID field
+	// getAttribute() actually give the value of the Attribute, not common
+	// raw use, in next method we will use from common action
+	public void use_of_getAttribute_method () {
+		elementDisplayed(userId);
+		pause(4);
+		// 1 example is enough
+		String ml = driver.findElement(By.xpath("//input[contains(@id, 'cms-login-u')]")).getAttribute("maxlength");
+		String ph = driver.findElement(By.xpath("//input[@id='cms-login-userId']")).getAttribute("placeholder");
+		System.out.println("The value of the maxlength attribute is: " + ml);
+		System.out.println("The value of the placeholder attribute is: " + ph);
+		
+		// attribute er common action in next class
+		// Assert in details
+	
+	}
+	
+	// use of clear()
+	public void use_of_clear_in_login() {
+		elementDisplayed(userId);
+		inputText(userId, "February 2024 QA Bootcamp");
+		pause(3);
+		clearTextFromTheField(userId);
+		pause(3);
+		inputText(userId, "February 2024 QA Evening Bootcamp");
+		pause(3);
+		elementDisplayed(password);
+		inputText(password, "Abc@123a");
+		pause(3);
+		clearTextFromTheField(password);
+		inputText(password, "Abc@123abcd");
+		pause(3);
+		elementSelected(checkBox);
+		clickElement(checkBox);
+		pause(3);
+		elementEnabled(loginButton); // used here
+		clickElement(loginButton);
+		pause(3);
+	}
 	
 
 
