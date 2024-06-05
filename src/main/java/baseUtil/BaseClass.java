@@ -26,7 +26,8 @@ public class BaseClass {
 		driver.manage().window().maximize();		
 		driver.manage().deleteAllCookies();
 		driver.get(configuration.getProperties(URL));
-		// How can we convert a String to Long type
+		// We can also use driver.navigate().to("https://portal.cms.gov/portal/");
+		//driver.navigate().to("https://portal.cms.gov/portal/");
 		long pageLoadWait = Long.parseLong(configuration.getProperties(PAGELOAD_WAIT));
 		long implicitlyWait = Long.parseLong(configuration.getProperties(IMPLICITLY_WAIT));
 		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(pageLoadWait));

@@ -2,9 +2,12 @@ package common;
 
 import java.util.NoSuchElementException;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+
+import com.github.dockerjava.api.model.Driver;
 
 import reports.Loggers;
 
@@ -110,6 +113,41 @@ public class CommonActions {
 			Assert.fail();
 		}
 	}
+	
+	public static void inputTextThenClickEnter(WebElement element, String input) {
+		try {
+			element.sendKeys(input, Keys.ENTER);
+			Loggers.logTheTest(input + " <-----> has been put into <-----> " + element + " and then clicked by Enter Key");
+		} catch (NoSuchElementException | NullPointerException e) {
+			e.printStackTrace();
+			Loggers.logTheTest(element + "<----------> has not been found\n" + e.getMessage() );
+			Assert.fail();
+		}
+	}
+	
+	public static void inputTextThenClickReturn(WebElement element, String input) {
+		try {
+			element.sendKeys(input, Keys.RETURN);
+			Loggers.logTheTest(input + " <-----> has been put into <-----> " + element + " and then clicked by Enter Key");
+		} catch (NoSuchElementException | NullPointerException e) {
+			e.printStackTrace();
+			Loggers.logTheTest(element + "<----------> has not been found\n" + e.getMessage() );
+			Assert.fail();
+		}
+	}
+	
+	public static void inputTextThenClickTab(WebElement element, String input) {
+		try {
+			element.sendKeys(input, Keys.TAB);
+			Loggers.logTheTest(input + " <-----> has been put into <-----> " + element + " and then clicked by Enter Key");
+		} catch (NoSuchElementException | NullPointerException e) {
+			e.printStackTrace();
+			Loggers.logTheTest(element + "<----------> has not been found\n" + e.getMessage() );
+			Assert.fail();
+		}
+	}
+	
+	
 	
 	
 
