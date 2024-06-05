@@ -1,8 +1,11 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
@@ -12,6 +15,8 @@ import org.testng.Assert;
 // this is possible when they are static in nature, * means all
 // This is called static import
 import static common.CommonActions.*;
+
+import java.time.Duration;
 
 public class HomePage {
 	public WebDriver driver;
@@ -394,6 +399,176 @@ public class HomePage {
 		pause(3);
 	}
 	
+	// use of Keys.ENTER, most common then [raw code]
+	public void use_of_sendKeys_method_then_click_by_enter_key_of_the_laptop_01 () {
+		pause(3);
+		driver.findElement(By.name("user-d")).sendKeys("Tofael", Keys.ENTER);
+		pause(3);
+	}
+	
+	// use of Keys.ENTER, common method used
+	public void use_of_sendKeys_method_then_click_by_enter_key_of_the_laptop_02 () {
+		elementDisplayed(userId);
+		inputTextThenClickEnter(userId, "February 2024 QA Bootcamp"); // here used
+		pause(3);
+	}
+	
+	// use of Keys.RETURN , common method used
+	public void use_of_sendKeys_method_then_click_by_return_key_of_the_laptop () {
+		elementDisplayed(userId);
+		inputTextThenClickEnter(userId, "February 2024 QA Bootcamp");
+		pause(3);
+		elementDisplayed(password);
+		inputTextThenClickReturn(password, "Abc@1234"); // here used
+		pause(3);
+		// below line is comment out becuase Return button showing normal flow the application
+//		elementSelected(checkBox);
+//		clickElement(checkBox);
+//		pause(3);
+//		elementEnabled(loginButton); // used here
+//		clickElement(loginButton);
+//		pause(3);
+	}
+	
+	// use of Keys.TAB, common method used
+	public void use_of_sendKeys_method_then_click_by_tab_key_of_the_laptop () {
+		elementDisplayed(userId);
+		inputTextThenClickTab(userId, "Morning Batch"); // the focus will go to next input
+		pause(3);
+
+	}
+	
+	// use of navigate()
+	// mostly interview question, never used in framework or in real time environment
+	public void use_of_navigate_method () {
+		pause(3);
+		driver.navigate().to("https://www.ebay.com");
+		pause(3);
+		driver.navigate().back();
+		pause(3);
+		driver.navigate().forward();
+		pause(3);
+		driver.navigate().refresh();
+		pause(3);
+		
+	}
+	
+	// Very very important for use in framework and also a interview question
+	public void use_of_mouse_hoverAction_on_ourLocations () {
+		pause(3);
+		// below process we don't use in framework
+		driver.navigate().to("https://www.mountsinai.org/");
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20)); 
+		// use of normalize-space(text()) as an xpath is new here, please have a look
+		WebElement ourLocations = driver.findElement(By.xpath("//a[normalize-space(text()) = 'Our Locations' and @class='hidden-xs dropdown']"));
+		Actions actions = new Actions(driver);
+		actions.moveToElement(ourLocations).build().perform();
+		pause(3);
+	}
+		
+	// alternate of click()
+	// very very  Important interview question + they ask you to write the code in MS word
+	// JavaScriptExecutor is an Interface that helps to execute JavaScript through Selenium Webdriver. 
+	// so, practice it by paper pen, then in ms word
+	// login button used
+	public void alternate_of_click_method() {
+		WebElement loginButton = driver.findElement(By.id("cms-login-submit")); 
+		// above line, we can also use it at the beginning, no need to show it here
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		js.executeScript("arguments[0].click()", loginButton); // memorize the content
+		// arguments[0] means, find the web element of index 0, means first occurrence
+		pause(3);
+	}
+	
+	// how to input text inside a field by JavascriptExecutor, alternate of sendKeys()
+	// user id field is used to input text
+	public void alternate_of_send_keys_method() {
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		js.executeScript("arguments[0].value = 'Mohammad Sharkar'", userId);
+		pause(3);
+	}
+	
+	// login process by JavascriptExecutor
+	// alternative of click(), sendKeys() is used
+	public void login_process_by_JavascriptExecutor(){
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		elementDisplayed(userId);		
+		js.executeScript("arguments[0].value = 'February 2024 QA' ", userId);
+		pause(3);
+		elementDisplayed(password);
+		js.executeScript("arguments[0].value = 'OnthrallTest@1234' ", password);
+		pause(3);
+		elementSelected(checkBox);
+		js.executeScript("arguments[0].click()", checkBox);
+		pause(3);
+		elementEnabled(loginButton);
+		verifyTextOfTheWebElement(loginButton, "Login");
+		js.executeScript("arguments[0].click()", loginButton);
+		pause(3);
+	}
+	
+	// it will fail, because selenium can't handle hidden element
+	public void how_to_handle_hidden_element_by_regular_selenium_method() {
+		pause(3);
+		driver.navigate().to("https://www.letskodeit.com/practice");
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+		pause(3);
+		// identify the 'Hide' element and click on it [line 548]
+		// The search field will be disappeared, but we can pass value on it, as we got the info before
+		driver.findElement(By.id("hide-textbox")).click();
+		pause(3);
+		// identify element and set/input text or value (line 551) by selenium
+		driver.findElement(By.xpath("//input[@id='displayed-text']")).sendKeys("August 2023");
+		// it will fail by below error message
+		// org.openqa.selenium.ElementNotInteractableException: element not interactable
+		// whenever you find element not interactable in console, that is for sure a hidden element		
+	}
+	
+	// it will pass
+	public void how_to_handle_hidden_element_by_javascriptExecutor() {
+		pause(3);
+		driver.navigate().to("https://www.letskodeit.com/practice");
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+		pause(3);
+		// identify the 'Hide' element and click on it [line 548]
+		// The search field will be disappeared, but we can pass value on it, as we got the info before
+		// we can click by regular selenium method like 520
+		WebElement hide = driver.findElement(By.id("hide-textbox"));
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].click()", hide); 
+		pause(3);
+		// identify element and set/input text or value (line 551) by selenium
+		// identify element and set/input text or value by JavascriptExecutor
+		WebElement searchField = driver.findElement(By.xpath("//input[@id='displayed-text']"));
+		js.executeScript("arguments[0].value = 'February 2024' ", searchField);	
+		
+		
+		// You can really know what was the text written by the JavascriptExecutor		
+		// Not important and not related
+		// Extra code, alternative of  getText() 
+		// Extra not related to hidden elements and not important
+		// To find out what you send as text, not necessary for this scenario
+		// Just save the below code for future reference
+		String s = (String) js.executeScript("return document.getElementById('displayed-text').value");
+		System.out.print("Value entered in hidden field: " + s + "\n");
+		
+		// Not important
+		// How to get title of the page by JavaScript
+		// How to read a JavaScript variable in Selenium WebDriver?
+		// How to getTitle by Javascript, 
+		String sText = js.executeScript("return document.title;").toString(); // fetching page title by javascript
+		System.out.println("The title of the Page is: "+sText);	
+		
+		// Not related with this test
+		// How to refresh by Javascript, 
+		js.executeScript("history.go(0)"); // To do refresh by Javascript
+		
+	}
+	
+		
 
 
 	

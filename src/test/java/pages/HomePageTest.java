@@ -157,10 +157,70 @@ public class HomePageTest extends BaseClass {
 		homePage.use_of_getAttribute_method();
 	}
 	
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void use_of_clear_in_login_test() {
 		homePage.use_of_clear_in_login();
 	}
+	
+	@Test(enabled = false)
+	public void use_of_sendKeys_method_then_click_by_enter_key_of_the_laptop_test_01 () {
+		homePage.use_of_sendKeys_method_then_click_by_enter_key_of_the_laptop_01();
+	}
+	
+	@Test(enabled = false)
+	public void use_of_sendKeys_method_then_click_by_enter_key_of_the_laptop_test_02 () {
+		homePage.use_of_sendKeys_method_then_click_by_enter_key_of_the_laptop_02();
+	}
+	
+	@Test(enabled = false)
+	public void use_of_sendKeys_method_then_click_by_return_key_of_the_laptop_test () {
+		homePage.use_of_sendKeys_method_then_click_by_return_key_of_the_laptop();
+	}
+	
+	@Test(enabled = false)
+	public void use_of_sendKeys_method_then_click_by_tab_key_of_the_laptop_test () {
+		homePage.use_of_sendKeys_method_then_click_by_tab_key_of_the_laptop();
+	}
+	
+	@Test(enabled = false)
+	public void use_of_navigate_method_test () {
+		homePage.use_of_navigate_method ();
+	}
+	
+	@Test(enabled = false)
+	public void use_of_mouse_hoverAction_on_ourLocations_test () {
+		homePage.use_of_mouse_hoverAction_on_ourLocations ();
+	}
+	
+	@Test(enabled = false)
+	public void alternate_of_click_method_test() {
+		homePage.alternate_of_click_method();
+	}
+	
+	@Test(enabled = false)
+	public void alternate_of_send_keys_method_test() {
+		homePage.alternate_of_send_keys_method();
+	}
+	
+	
+	@Test(enabled = false)
+	public void login_process_by_JavascriptExecutor_test() {
+		homePage.login_process_by_JavascriptExecutor();
+	}
+	
+	// it will fail
+	@Test(enabled = false)
+	public void how_to_handle_hidden_element_by_regular_selenium_method_test() {
+		homePage.how_to_handle_hidden_element_by_regular_selenium_method();
+	}
+	
+	@Test(enabled = true)
+	public void how_to_handle_hidden_element_by_javascriptExecutor_test() {
+		homePage.how_to_handle_hidden_element_by_javascriptExecutor();
+	}
+		
+	
+	
 	
 	
 	
