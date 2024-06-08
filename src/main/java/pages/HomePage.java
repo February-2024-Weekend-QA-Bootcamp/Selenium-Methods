@@ -9,6 +9,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 // new, you have to manually write it to get access of common method
@@ -20,6 +22,7 @@ import java.time.Duration;
 
 public class HomePage {
 	public WebDriver driver;
+	public WebDriverWait wait;
 	
 	// parameterized constructor initialized when class in instantiated [object created]
 	public HomePage(WebDriver driver) {
@@ -27,6 +30,7 @@ public class HomePage {
 		// PageFactory class help to instantiate WebElements
 		// Important interview question
 		PageFactory.initElements(driver, this);
+		wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 	}
 
 	// 1st way: Most common way to write the WebElement (@FindBy), you must know how to do that
@@ -453,6 +457,10 @@ public class HomePage {
 		
 	}
 	
+	// findElements need to do before that
+	// dropdown feature is showed in forgot User id page
+	
+	
 	// Very very important for use in framework and also a interview question
 	public void use_of_mouse_hoverAction_on_ourLocations () {
 		pause(3);
@@ -568,11 +576,62 @@ public class HomePage {
 		
 	}
 	
-		
+	// very very important
+	// when the web element always failed in test, use explicitly wait, 
+	// in this web site doesn't have that complex scenario
+	// "unlock" web element 
+	// using visibilityOfElementLocated() method , Number one
+	// This is a very common scenario in industry to use explicitly wait
+	public void use_of_explicitly_wait_01() {
+		pause(3);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(unlock)).click();
+		pause(4);
+	}
+	
+	// unlock webElement
+	// using elementToBeClickable() method, number two
+	// Please see line 596, how to write by By class
+	public void use_of_explicitly_wait_02(){
+		pause(3);
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(), 'Password')]"))).click();
+		pause(4);
+	}
+	
+	// userId webElement
+	// using visibilityOf() method, number three
+	public void use_of_explicitly_wait_03(){
+		pause(3);
+		wait.until(ExpectedConditions.visibilityOf(userId)).isDisplayed(); // here userId is webElement type
+		pause(4);
+	}
+	
+	// Try to remember this above 3 conditions name for interview, most time they asked it
+	
+	// Not important, you can use it to practice
+	// "unlock" web element 
+	// using presenceOfElementLocated() method
+	public void use_of_explicitly_wait_04(){
+		pause(3);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[contains(text(), 'Password')]"))).click();
+		pause(4);
+	}
+	
+	// Not important, you can use it to practice
+	// "Login Button" web element
+	// using textToBePresentInElement() method
+	// this is not a clickable method, just to recognize the web element
+	public void use_of_explicitly_wait_05(){
+		pause(3);
+		boolean outcome = wait.until(ExpectedConditions.textToBePresentInElement(loginButton, "Login"));
+		System.out.println(outcome);
+		pause(4);
+	}
 
 
-	
-	
+
+
+
+
 	
 	
 	
