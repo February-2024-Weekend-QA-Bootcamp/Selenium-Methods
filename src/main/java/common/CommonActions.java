@@ -1,10 +1,13 @@
 package common;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import com.github.dockerjava.api.model.Driver;
@@ -12,6 +15,8 @@ import com.github.dockerjava.api.model.Driver;
 import reports.Loggers;
 
 public class CommonActions {
+	public WebDriver driver;
+	
 	// common method for click ()
 	public static void clickElement(WebElement element) {
 		try {
@@ -146,6 +151,59 @@ public class CommonActions {
 			Assert.fail();
 		}
 	}
+	
+	public static void validationOfHeader(WebElement element, String expectedHeader) {
+		String actualHeader = element.getText();
+		Assert.assertEquals(actualHeader, expectedHeader, "Header doesn't match");
+		Loggers.logTheTest(element + " ---> Actual Header : " + actualHeader + ". Expected Header : " + expectedHeader);
+	}
+
+	public static void validationOfSubHeader(WebElement element, String expectedSubHeader) {
+		String actualSubHeader = element.getText();
+		Assert.assertEquals(actualSubHeader, expectedSubHeader, "Sub Header doesn't match");
+		Loggers.logTheTest(element + " ---> Actual Sub Header : " + actualSubHeader + ". Expected SubHeader : "
+				+ expectedSubHeader);
+	}
+	
+	public static void selectDropdown(WebElement element, String value) {
+		try {
+			Select select = new Select(element);
+			select.selectByVisibleText(value);
+			Loggers.logTheTest(value + " has been selected from the dropdown of ---> " + element);
+		} catch (NullPointerException | NoSuchElementException e) {
+			e.printStackTrace();
+			Loggers.logTheTest(element + " : This element Not Found");
+			Assert.fail();
+		}
+	}
+
+	public boolean isPresent(By locator) {
+		List<WebElement> elements = driver.findElements(locator);
+		if (elements.size() != 0) {
+			Loggers.logTheTest(elements + " --- > This element is present and has match of : " + elements.size());
+			return true;
+		} else {
+			Loggers.logTheTest(elements + " --- > This element is NOT present and no match found : " + elements.size());
+			return false;
+		}
+	}
+	
+	public static void selectDropdownOnebyOne(WebElement element, List<WebElement> elements) {
+		try {
+			Select select = new Select(element);
+			for (int i = 1; i < elements.size(); i++) {
+				Loggers.logTheTest(elements.get(i).getText() + " is present in the dropdown");
+				select.selectByIndex(i);
+				pause(2);
+			}
+			Loggers.logTheTest("Total Element: " + (elements.size()-1) + " is present in the dropdown");
+		} catch (NullPointerException | NoSuchElementException e) { // elements er exception add korte hobe
+			e.printStackTrace();
+			Loggers.logTheTest(element + " : This element Not Found");
+			Assert.fail();
+		}
+	}
+
 	
 	
 	

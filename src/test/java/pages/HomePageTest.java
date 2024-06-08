@@ -214,15 +214,35 @@ public class HomePageTest extends BaseClass {
 		homePage.how_to_handle_hidden_element_by_regular_selenium_method();
 	}
 	
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void how_to_handle_hidden_element_by_javascriptExecutor_test() {
 		homePage.how_to_handle_hidden_element_by_javascriptExecutor();
 	}
-		
 	
+	@Test(enabled = true)
+	public void use_of_explicitly_wait_01_test() {
+		homePage.use_of_explicitly_wait_01();
+	}
 	
+	@Test(enabled = true)
+	public void use_of_explicitly_wait_02_test() {
+		homePage.use_of_explicitly_wait_02();
+	}
 	
+	@Test(enabled = true)
+	public void use_of_explicitly_wait_03_test(){
+		homePage.use_of_explicitly_wait_03();
+	}
 	
+	@Test(enabled = true)
+	public void use_of_explicitly_wait_04_test(){
+		homePage.use_of_explicitly_wait_04();
+	}
+	
+	@Test(enabled = true)
+	public void use_of_explicitly_wait_05_test(){
+		homePage.use_of_explicitly_wait_05();
+	}
 	
 	
 	
