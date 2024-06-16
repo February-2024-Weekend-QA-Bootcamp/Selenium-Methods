@@ -13,6 +13,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.SkipException;
 
 import com.github.dockerjava.api.model.Driver;
 
@@ -22,15 +23,19 @@ import com.github.dockerjava.api.model.Driver;
 import static common.CommonActions.*;
 
 import java.awt.AWTException;
+import java.awt.Dimension;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.time.Duration;
+import java.util.List;
+import java.util.Set;
 
 public class HomePage {
 	public WebDriver driver;
 	public WebDriverWait wait;
 	JavascriptExecutor js;
 	Actions actions;
+	org.openqa.selenium.Dimension dimension;
 	
 	// parameterized constructor initialized when class in instantiated [object created]
 	public HomePage(WebDriver driver) {
@@ -386,8 +391,30 @@ public class HomePage {
 		System.out.println("The value of the placeholder attribute is: " + ph);
 		
 		// attribute er common action in next class
-		// Assert in details
+	}
 	
+	// Learning Assertion
+	public void logoDisplayed01() {
+		elementDisplayed(logo); // Actual outcome from selenium method
+		Assert.assertTrue(true); // Expected outcome
+	}
+	
+	public void logoDisplayed02() {
+		elementDisplayed(logo); // Actual Result or outcome which doesn't match with your below expectation
+		Assert.assertTrue(false); // Expected Result // java.lang.AssertionError: expected [true] but found [false]
+		// Although the outcome is true, but because of difference between expected vs actual is not same, the test case failed
+	}
+	
+	public void logoDisplayed03() {
+		elementDisplayed(logo); // Actual outcome from selenium method
+		// Assert.assertTrue(false, "Expected vs actual doesn't match"); // Expected outcome
+		// Assert.assertTrue(true, "Application Logo is not displayed"); // This error message will appear if failed
+		Assert.assertFalse(false, "Application Logo is not displayed"); // false false means true		
+	}
+	
+	public void logoDisplayed04() {
+		elementDisplayed(logo); // Actual outcome from selenium method
+		Assert.assertFalse(true, "Expected vs actual doesn't match"); // false false means true, False true means false, so failed		
 	}
 	
 	// use of clear()
@@ -470,6 +497,32 @@ public class HomePage {
 	// findElements need to do before that
 	// dropdown feature is showed in forgot User id page
 	
+	public void set_a_specific_size_for_window() {
+		pause(3);
+		// Will get the size of cms window
+		System.out.println("The size of the CMS screen is: "+ driver.manage().window().getSize());
+		dimension = new org.openqa.selenium.Dimension(1000, 700);
+		driver.manage().window().setSize(dimension);
+		pause(3);
+		System.out.println("The size of the set CMS screen is: "+ driver.manage().window().getSize());
+		
+		// Extra not related to this method, although you can skip
+		pause(3);
+		driver.navigate().to("https://www.cvs.com");
+		pause(3);
+		System.out.println("The size of the set CVS screen is: "+ driver.manage().window().getSize());
+		driver.manage().window().maximize();
+		pause(3);
+		System.out.println("The size of the CVS maximize screen is: "+ driver.manage().window().getSize());
+		pause(3);
+		driver.manage().window().setSize(dimension); // just to show again the set size
+		pause(3);
+		System.out.println("The size of the set CVS screen is: "+ driver.manage().window().getSize());
+		pause(3);;
+		driver.manage().window().fullscreen();
+		pause(3);
+		System.out.println("The size of the CVS full screen is: "+ driver.manage().window().getSize());	
+	}
 	
 	// Very very important for use in framework and also a interview question
 	public void use_of_mouse_hoverAction_on_ourLocations () {
@@ -483,6 +536,30 @@ public class HomePage {
 		// Actions actions = new Actions(driver);
 		actions.moveToElement(ourLocations).build().perform();
 		pause(3);
+	}
+	
+	// Use of findElements()
+	// Tough, try your best
+	public void mouseHoverActionOnAboutUs() {
+		pause(3);
+		driver.navigate().to("https://www.mountsinai.org/");
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20)); 
+		// WebElement aboutUs = driver.findElement(By.xpath("(//a[normalize-space(text())='About Us'])[1]")); // a nex xpath is used
+		WebElement aboutUs = driver.findElement(By.xpath("//a[normalize-space(text()) = 'About Us']//preceding-sibling::i")); // a nex xpath is used
+		pause(3);
+		actions.moveToElement(aboutUs).build().perform(); // used for mouse hover action
+		pause(3); // Until here, we did it before
+		
+		// Use of findElements()
+		List<WebElement>listOfAboutUs = driver.findElements(By.xpath("(//a[normalize-space(text())='About Us'])[1]//following-sibling::div//child::div//child::div"));
+		for(int i = 0; i<listOfAboutUs.size(); i++) {
+			System.out.println(listOfAboutUs.get(i).getText());
+		}
+		
+		
+		
+		
 	}
 		
 	// alternate of click()
@@ -905,6 +982,102 @@ public class HomePage {
 		pause(3);
 	}
 	
+	public void switch_between_window_01 () {
+		pause(3);
+		String parentWindow = driver.getWindowHandle();
+		System.out.println("Parent Window ID: " + parentWindow + "\n");
+		pause(3);
+		WebElement enterprisePortal = driver.findElement(By.xpath("//h1[text()='Enterprise Portal']")); 
+		WebElement element = driver.findElement(By.linkText("Learn more about Enterprise Portal")); 
+		js.executeScript("arguments[0].scrollIntoView(true)", enterprisePortal);
+		pause(4);
+		js.executeScript("arguments[0].click()", element);
+		pause(5);
+		Set<String> allWindowHandles = driver.getWindowHandles();
+		System.out.println("Total Windows Opened: " + allWindowHandles.size());
+		// Extract Parent and child window from all window handles
+		String parent = (String)allWindowHandles.toArray()[0];
+		String child = (String)allWindowHandles.toArray()[1];
+		System.out.println("Parent Window ID: " + parent + "\n");
+		System.out.println("Child1 Window ID: " + child + "\n");
+		// Then switch from one window to other window (parent to child) by below
+		driver.switchTo().window(child);
+		WebElement header = driver.findElement(By.xpath("//h1[contains(text(), 'CMS')]")); 
+		WebElement subHeader = driver.findElement(By.xpath("//p[starts-with(text(), 'The Enterprise Portal is a')]")); // Here is a new xpath
+		validationOfHeader(header, "CMS Enterprise Portal - Help Center");
+		validationOfSubHeader(subHeader, "The Enterprise Portal is a gateway that provides access to over 50 different Centers for Medicare & Medicaid Services (CMS) healthcare-based applications. It provides the ability to request access to multiple Portal-integrated CMS applications and to launch/access those applications.");
+		pause(3);		
+	}
+	
+	// Extra lines deleted
+	public void switch_between_window_02 () {
+		pause(3);
+		WebElement enterprisePortal = driver.findElement(By.xpath("//h1[text()='Enterprise Portal']")); 
+		WebElement element = driver.findElement(By.linkText("Learn more about Enterprise Portal")); 
+		js.executeScript("arguments[0].scrollIntoView(true)", enterprisePortal);
+		pause(4);
+		js.executeScript("arguments[0].click()", element);
+		pause(5);
+		Set<String> allWindowHandles = driver.getWindowHandles();
+		// Extract Parent and child window from all window handles
+		String parent = (String)allWindowHandles.toArray()[0];
+		String child = (String)allWindowHandles.toArray()[1];
+		// Then switch from one window to other window (parent to child) by below
+		driver.switchTo().window(child);
+		WebElement header = driver.findElement(By.xpath("//h1[contains(text(), 'CMS')]")); 
+		WebElement subHeader = driver.findElement(By.xpath("//p[starts-with(text(), 'The Enterprise Portal is a')]")); // Here is a new xpath
+		validationOfHeader(header, "CMS Enterprise Portal - Help Center");
+		validationOfSubHeader(subHeader, "The Enterprise Portal is a gateway that provides access to over 50 different Centers for Medicare & Medicaid Services (CMS) healthcare-based applications. It provides the ability to request access to multiple Portal-integrated CMS applications and to launch/access those applications.");
+		pause(3);	
+	}
+	
+	// https://demoqa.com/browser-windows
+	// https://enthrallit.com
+	// https://www.amerihealth.com/
+	// scroll down and find careers, then it will direct to a new page, then click "See current job openings"
+
+	// different way for moving from child to window for different url, "Enthrall"
+	public void switch_between_window_03 () {
+		pause(3);	
+		driver.get("https://enthrallit.com/selenium/");
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		pause(3);
+		
+		String mainWindow = driver.getWindowHandle();
+		
+		// This will scroll up the page by 1000 pixel vertically
+		// but we can use scrollIntoView()
+		pause(3); // used to see the scroll
+		js.executeScript("window.scrollBy(0,1000)", ""); // use scroll into view
+		pause(3);
+		
+		// click on the Open Window button
+		driver.findElement(By.xpath("(//button[text()='Open Window'])[1]")).click();
+		pause(3);
+		
+		// interview question:  How you handle windows from parent to child? or how you can recognize the parent and child window
+		
+		// Get all window handles -- include parent + child
+		// why we are using set? because we don't want duplicate, and set doesn't allow duplicate
+		Set<String> allWindowHandles = driver.getWindowHandles();
+		
+		// for each loop, line 1284, get title and get current url is not related to this code
+		for (String wh : allWindowHandles) {
+			if (mainWindow.equals(wh)) {
+				System.out.println("\t Parent: \t\t" + wh + "\n \t URL: \t \t" + driver.getCurrentUrl()
+						+ "\n \t Title: \t \t" + driver.getTitle() + "\n");
+			} else {
+				driver.switchTo().window(wh);
+				System.out.println("\t Child: \t\t" + wh + "\n \t URL: \t \t" + driver.getCurrentUrl()
+						+ "\n \t Title: \t \t" + driver.getTitle());
+			}
+		}		
+		
+	}
+		
+	
+	
 	// regarding TestNG
 	// use of groups
 	public void getMethodsOfThePage03() {
@@ -957,6 +1130,56 @@ public class HomePage {
 		System.out.println(driver.getCurrentUrl());
 	}
 	
+	// This test to explain the next one, it is not tested
+	public void nonSkipHomePageTitleTest() {
+		String expected = "CMS Enterprise Portal";
+		String actual = driver.getTitle();
+		System.out.println("home page title is: " + actual);
+		Assert.assertEquals(actual, expected, "Home Page Title doesn't match...");	
+		System.out.println("No need to skip the test");
+	}	
+	
+	// how to handle Exception: try, catch, throw, throws, finally
+	// below examples of where 'throw' is used
+	// Que: How to skip a test? by throw new SkipException() method
+	public void skipHomePageTitle01() {
+		String expected = "CMS Enterprise Portal";
+		if(expected.equals(driver.getTitle())) {
+			throw new SkipException("Skipping -- as the title matches as expected");
+			// if above condition is true, then no more below execution
+		} else {
+			System.out.println("Home Page Title doesn't match...");
+		}
+		System.out.println("I am out of the if else condition");
+	}
+	
+	public void skipHomePageTitle02() {
+		String expected = "      CMS Enterprise Portal"; // title will not match
+		if(expected.equals(driver.getTitle())) {
+			throw new SkipException("Skipping -- as the title matches as expected");
+		} else {
+			System.out.println("Home Page Title doesn't match...");
+		}
+		System.out.println("I am out of the if else condition");
+	}
+	
+	public void getMethodsOfThePage06() {
+		String actual = driver.getTitle();
+		System.out.println("Title name: "+ actual);
+		String expected = "CMS Enterprise Portal";
+		Assert.assertEquals(actual, expected, "Home Page Title doesn't match ....... ");		
+	}
+	
+	public void getMethodsOfThePage07() {
+		String actual = driver.getTitle();
+		System.out.println("Title name: "+ actual);
+		String expected = "CMS Enterprise Portal";
+		Assert.assertEquals(actual, expected, "Home Page Title doesn't match ....... ");	
+		System.out.println("Thread: "+ Thread.currentThread().getName()); // to know which thread is running
+	}
+	
+	
+
 	
 
 
