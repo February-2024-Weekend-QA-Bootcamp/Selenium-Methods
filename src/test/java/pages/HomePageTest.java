@@ -1,7 +1,13 @@
 package pages;
 
 import java.awt.AWTException;
+import java.time.Duration;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 
 import baseUtil.BaseClass;
@@ -145,6 +151,28 @@ public class HomePageTest extends BaseClass {
 	}
 	
 	@Test(enabled = false)
+	public void logoDisplayed01Test() {
+		homePage.logoDisplayed01();
+	}
+	
+	@Test(enabled = false)
+	public void logoDisplayed02Test() {
+		homePage.logoDisplayed02();
+	}
+
+	@Test(enabled = false)
+	public void logoDisplayed03Test() {
+		homePage.logoDisplayed03();
+	}
+	
+	@Test(enabled = false)
+	public void logoDisplayed04Test() {
+		homePage.logoDisplayed04();
+	}
+	
+	
+	
+	@Test(enabled = false)
 	public void getMethodsOfThePageTest() {
 		homePage.getMethodsOfThePage();
 	}
@@ -190,8 +218,18 @@ public class HomePageTest extends BaseClass {
 	}
 	
 	@Test(enabled = false)
+	public void set_a_specific_size_for_window() {
+		homePage.set_a_specific_size_for_window();
+	}
+	
+	@Test(enabled = false)
 	public void use_of_mouse_hoverAction_on_ourLocations_test () {
 		homePage.use_of_mouse_hoverAction_on_ourLocations ();
+	}
+	
+	@Test(enabled = true)
+	public void mouseHoverActionOnAboutUs() {
+		homePage.mouseHoverActionOnAboutUs();
 	}
 	
 	@Test(enabled = false)
@@ -328,6 +366,24 @@ public class HomePageTest extends BaseClass {
 		homePage.read_any_cell_of_a_row_of_the_table ();
 	}
 		
+	
+	@Test(enabled = false)
+	public void switch_between_window_01_test () {
+		homePage.switch_between_window_01();	
+	}
+
+	@Test(enabled = false)
+	public void switch_between_window_02_test () {
+		homePage.switch_between_window_02();		
+	}
+	
+	@Test(enabled = false)
+	public void switch_between_window_03_Test () {
+		homePage.switch_between_window_03 ();
+	}
+	
+	
+	
 	@Test(enabled = false, priority = 3, groups = {"functionalTest", "sanityTest", "smokeTest", "regressionTest"})
 	public void getMethodsOfThePage03Test() {
 		homePage.getMethodsOfThePage03();
@@ -378,7 +434,7 @@ public class HomePageTest extends BaseClass {
 	public void newUserRegistrationButtonClickTest() {
 		homePage.newUserRegistrationButtonClick();
 	}
-	/*
+	
 	@Test(enabled = false)
 	public void skipHomePageTitle01Test() {
 		homePage.skipHomePageTitle01();
@@ -400,11 +456,12 @@ public class HomePageTest extends BaseClass {
 	//TODO Is the threadPoolSize working? No, NEED TO RESOLVED, 
 	// may be working as multi threaded, can't see, need to be make sure
 	// Ask Nasir to solve it
-	@Test(enabled = false, invocationCount = 5, threadPoolSize = 3, timeOut = 10000)
+	@Test(enabled = false, invocationCount = 6, threadPoolSize = 3, timeOut = 10000)
 	public void getMethodsOfThePage07Test() {
 		homePage.getMethodsOfThePage07();
 	}
 	
+	// Below we wrote the code directly in test cases, you will not find any code in HomePage
 	// interview question: what are the alternative of click(), 
 	// but they are not expecting first 2 answer, they are looking for javascriptExecutor
 	// alternate of click()
@@ -446,7 +503,7 @@ public class HomePageTest extends BaseClass {
 		Thread.sleep(4000);
 	}
 	
-	// From here till line 505, this is high level, so just see, don't take them seriously
+	// this is high level, so just see, don't take them seriously
 	// alternative to click an web element in many ways (never memorize, a collection of code)
 	
 	// Not important
@@ -497,7 +554,7 @@ public class HomePageTest extends BaseClass {
 		driver.get("https://www.ebay.com");	
 	}
 		
-	 */
+	 
 	 
 
 }
